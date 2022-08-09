@@ -1,0 +1,3 @@
+[submodule "Plugins/MillicastPublisher"]
+	path = Plugins/MillicastPublisher
+	url = git@github.com:millicast/millicast-publisher-unreal-engine-plugin.git
