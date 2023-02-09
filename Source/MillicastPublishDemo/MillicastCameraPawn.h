@@ -44,8 +44,8 @@ public:
 	void YawCamera(float AxisValue);
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
+	void EndPlay(EEndPlayReason::Type Reason) override;
 
 public:	
 	// Called every frame
@@ -54,4 +54,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	FDelegateHandle OnBeginFrameRTHandle;
 };

@@ -20,10 +20,6 @@ AMillicastCameraPawn::AMillicastCameraPawn()
 	StaticMeshComp->SetupAttachment(RootComponent);
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
-
-	FCoreDelegates::OnBeginFrameRT.AddLambda([this]() {
-		CopyTexture();
-		});
 }
 
 void AMillicastCameraPawn::CopyTexture()
@@ -101,11 +97,20 @@ void AMillicastCameraPawn::YawCamera(float AxisValue)
 	CameraInput.Y = AxisValue;
 }
 
-// Called when the game starts or when spawned
 void AMillicastCameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	OnBeginFrameRTHandle = FCoreDelegates::OnBeginFrameRT.AddLambda([this]() {
+		CopyTexture();
+		});
+}
+
+void AMillicastCameraPawn::EndPlay(EEndPlayReason::Type Reason)
+{
+	Super::EndPlay(Reason);
+
+	FCoreDelegates::OnBeginFrameRT.Remove(OnBeginFrameRTHandle);
 }
 
 // Called every frame
